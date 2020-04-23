@@ -20,5 +20,5 @@
     <string name="result">=</string>
 
     <string name="clear">Clear</string>
-    <string name="result_view">0</string>
+    <string name="result_view"></string>
 </resources>
