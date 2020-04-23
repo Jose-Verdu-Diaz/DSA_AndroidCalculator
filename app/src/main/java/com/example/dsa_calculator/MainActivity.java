@@ -16,11 +16,13 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView txtview_resultview;
 
-    private boolean addition, subtraction, multiplication, division;
+    private char operation;
 
     /*----------------------------------------------------------------------------*/
 
-    private float  value1, value2;
+    private float  value1=Float.NaN;
+    private float  value2=Float.NaN;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +108,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (txtview_resultview == null) {
                     txtview_resultview.setText("");
-                } else {
+                }else if(Float.isNaN(value1)){
                     value1 = Float.parseFloat(txtview_resultview.getText() + "");
-                    addition = true;
+                    operation='+';
+                    txtview_resultview.setText(null);
+                } else {
+                    value2 = Float.parseFloat(txtview_resultview.getText() + "");
+                    calculate(operation);
+                    operation='+';
                     txtview_resultview.setText(null);
                 }
             }
@@ -117,27 +124,54 @@ public class MainActivity extends AppCompatActivity {
         btn_subtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                value1 = Float.parseFloat(txtview_resultview.getText() + "");
-                subtraction = true;
-                txtview_resultview.setText(null);
+                if (txtview_resultview == null) {
+                    txtview_resultview.setText("");
+                }else if(Float.isNaN(value1)){
+                    value1 = Float.parseFloat(txtview_resultview.getText() + "");
+                    operation='-';
+                    txtview_resultview.setText(null);
+                } else {
+                    value2 = Float.parseFloat(txtview_resultview.getText() + "");
+                    calculate(operation);
+                    operation='-';
+                    txtview_resultview.setText(null);
+                }
             }
         });
 
         btn_multiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                value1 = Float.parseFloat(txtview_resultview.getText() + "");
-                multiplication = true;
-                txtview_resultview.setText(null);
+                if (txtview_resultview == null) {
+                    txtview_resultview.setText("");
+                }else if(Float.isNaN(value1)){
+                    value1 = Float.parseFloat(txtview_resultview.getText() + "");
+                    operation='*';
+                    txtview_resultview.setText(null);
+                } else {
+                    value2 = Float.parseFloat(txtview_resultview.getText() + "");
+                    calculate(operation);
+                    operation='*';
+                    txtview_resultview.setText(null);
+                }
             }
         });
 
         btn_divide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                value1 = Float.parseFloat(txtview_resultview.getText() + "");
-                division = true;
-                txtview_resultview.setText(null);
+                if (txtview_resultview == null) {
+                    txtview_resultview.setText("");
+                }else if(Float.isNaN(value1)){
+                    value1 = Float.parseFloat(txtview_resultview.getText() + "");
+                    operation='/';
+                    txtview_resultview.setText(null);
+                } else {
+                    value2 = Float.parseFloat(txtview_resultview.getText() + "");
+                    calculate(operation);
+                    operation='/';
+                    txtview_resultview.setText(null);
+                }
             }
         });
 
@@ -145,26 +179,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 value2 = Float.parseFloat(txtview_resultview.getText() + "");
-
-                if (addition == true) {
-                    txtview_resultview.setText(value1 + value2 + "");
-                    addition = false;
-                }
-
-                if (subtraction == true) {
-                    txtview_resultview.setText(value1 - value2 + "");
-                    subtraction = false;
-                }
-
-                if (multiplication == true) {
-                    txtview_resultview.setText(value1 * value2 + "");
-                    multiplication = false;
-                }
-
-                if (division == true) {
-                    txtview_resultview.setText(value1 / value2 + "");
-                    division = false;
-                }
+                calculate(operation);
+                txtview_resultview.setText(value1 + "");
             }
         });
 
@@ -172,6 +188,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 txtview_resultview.setText("");
+                value1=Float.NaN;
+                value2=Float.NaN;
             }
         });
     }
@@ -195,5 +213,25 @@ public class MainActivity extends AppCompatActivity {
         btn_clear=(Button)findViewById(R.id.btn_clear);
 
         txtview_resultview=(TextView)findViewById(R.id.txtview_resultview);
+    }
+
+    private void calculate(char operation){
+        switch (operation){
+            case '+':
+                value1+=value2;
+                break;
+
+            case '-':
+                value1-=value2;
+                break;
+
+            case '*':
+                value1*=value2;
+                break;
+
+            case '/':
+                value1/=value2;
+                break;
+        }
     }
 }
